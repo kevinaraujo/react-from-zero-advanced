@@ -5,7 +5,6 @@ class Team extends Component {
         return (
             <div>
                 <About name={this.props.name} age={this.props.age}/>
-                <Social/>
             </div>
         );  
     }
