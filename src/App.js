@@ -6,37 +6,37 @@ class App extends Component {
         super(props);
 
         this.state = {
-            name: 'Kevin',
-            counter: 0
+            time: '00:00:00'
         };
     }
 
-    decrease() {
-        let state = this.state;
+    //AFTER COMPONENT IS LOADED, THIS FUNCTION IS CALLED ONCE
+    componentDidMount() {
         
-        state.counter--;
+        setInterval(() => {
 
-        this.setState(state);
+            this.setState({
+                time: new Date().toLocaleTimeString()
+            });
+
+        },1000);
     }
 
-    increase() {
-        let state = this.state;
-        
-        state.name = 'José';    
-        state.counter++;
+    //AFETE ANY UPDATE IN STATE, THIS FUNCTION IS CALLED
+    componentDidUpdate() {
+        console.log('teste');
+    }
 
-        this.setState(state);
+    //SHOULD RETURN TRUE OR FALSE SO THAT STATES UPDATE OR NOT
+    shouldComponentUpdate() {
+        console.log('deve atualizar');
+        return true;
     }
 
     render() {
         return (
             <div>
-                <h1>Counter: {this.state.name}</h1>
-                <h3>
-                    <button onClick={this.decrease.bind(this)}>-</button>
-                        {this.state.counter}
-                    <button onClick={this.increase.bind(this)}>+</button>
-                </h3>
+                <h1>My project: {this.state.time} </h1>
             </div>
         );
     }
