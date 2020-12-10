@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useMemo } from 'react';
 
 function App() {
 
@@ -9,7 +9,7 @@ function App() {
 
     const [input, setInput] = useState('');
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const tasksStorage = localStorage.getItem('tasks');
         setTasks(JSON.parse(tasksStorage));
     }, []);
@@ -26,8 +26,7 @@ function App() {
         setInput('');
     }
 
-    
-
+    const totalTasks = useMemo(() => tasks.length, [tasks]);
     return (
         <div>
             <ul>
@@ -35,6 +34,9 @@ function App() {
                     <li key={task}>{task}</li>
                 ))}
             </ul>
+            <br/>
+            <strong>Você tem {totalTasks} tarefas!</strong>
+            <br/>
             <input type='text' value={input} onChange={(e) => setInput(e.target.value)}/>
             <button onClick={handleAdd}>Add</button>
         </div>
