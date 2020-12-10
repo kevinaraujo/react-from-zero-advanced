@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
 
@@ -9,6 +9,15 @@ function App() {
 
     const [input, setInput] = useState('');
 
+    useEffect(() => {
+        const tasksStorage = localStorage.getItem('tasks');
+        setTasks(JSON.parse(tasksStorage));
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, [tasks]);
+    
     function handleAdd() {
         setTasks([
             ...tasks,
@@ -16,6 +25,8 @@ function App() {
         ]);
         setInput('');
     }
+
+    
 
     return (
         <div>
