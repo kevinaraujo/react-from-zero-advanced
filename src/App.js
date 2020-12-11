@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useMemo } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useMemo, useCallback } from 'react';
 
 function App() {
 
@@ -18,13 +18,14 @@ function App() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }, [tasks]);
     
-    function handleAdd() {
+    const handleAdd = useCallback(() => {
         setTasks([
             ...tasks,
             input
         ]);
         setInput('');
-    }
+
+    }, [tasks, input]);
 
     const totalTasks = useMemo(() => tasks.length, [tasks]);
     return (
