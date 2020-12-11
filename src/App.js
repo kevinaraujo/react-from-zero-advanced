@@ -1,33 +1,45 @@
 import React, { Component } from 'react';
-import Feed from './components/Feed';
 
 class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            feed: [
-                {id: 1, username: 'Lucas', likes: 10, comments:5},
-                {id: 2, username: 'Maria', likes: 200, comments:50},
-                {id: 3, username: 'José', likes: 2, comments:3},
-                {id: 3, username: 'Carlos', likes: 1, comments:0}
-            ]
+            email: '',
+            password: '',
+            gender: 'm'
         };
+    }
+
+    changeInput(input, e) {
+        this.setState({
+            ...this.state,
+            [input] : e.target.value
+        });
     }
 
     render() {
         return (
             <div>   
-                {this.state.feed.map((item) => {
-                    return (
-                        <Feed 
-                            id={item.id} 
-                            username={item.username} 
-                            likes={item.likes} 
-                            comments={item.comments} 
-                        />
-                    );
-                })}
+                <h2>Login</h2>
+                gender:
+                <select name="gender" value={this.state.gender} 
+                    onChange={(e) => this.changeInput('gender', e)}>
+                    <option value="m">Male</option>
+                    <option value="f">Female</option>
+                </select>
+                Email: 
+                <input type="text" name="email" value={this.state.email} 
+                    onChange={(e) => this.changeInput('email', e)}/>
+                Password: 
+                <input type="text" name="password" value={this.state.password}
+                    onChange={(e) => this.changeInput('password', e)}/>
+
+                <div>
+                    <div>{this.state.email}</div>
+                    <div>{this.state.password}</div>
+                    <div>{this.state.gender}</div>
+                </div>
             </div>
         );
     }
