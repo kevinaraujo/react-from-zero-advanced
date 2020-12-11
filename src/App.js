@@ -1,36 +1,36 @@
 import React, { Component } from 'react';
+import Feed from './components/Feed';
 
-class Team extends Component {
-    render() {
-        return (
-            <div>
-                <About name={this.props.name} age={this.props.age}/>
-            </div>
-        );  
+class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            feed: [
+                {id: 1, username: 'Lucas', likes: 10, comments:5},
+                {id: 2, username: 'Maria', likes: 200, comments:50},
+                {id: 3, username: 'José', likes: 2, comments:3},
+                {id: 3, username: 'Carlos', likes: 1, comments:0}
+            ]
+        };
     }
-}
 
-class About extends Component {
     render() {
         return (
-            <div>
-                <h2>Hi, I'm { this.props.name } </h2>
-                <h3>Age: {this.props.age}</h3>
-                <h3>Role: {this.props.role}</h3>
-                <hr/>
+            <div>   
+                {this.state.feed.map((item) => {
+                    return (
+                        <Feed 
+                            id={item.id} 
+                            username={item.username} 
+                            likes={item.likes} 
+                            comments={item.comments} 
+                        />
+                    );
+                })}
             </div>
         );
     }
-}
-
-function App() {
-    return (
-        <div>
-            <h1>Conheça nossa equipe:</h1>
-            <Team name="Lucas" role="developer" age="26"/>
-            <Team name="João" role="analyst" age="20"/>
-        </div>
-    );
 }
 
 export default App;
