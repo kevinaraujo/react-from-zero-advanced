@@ -4,42 +4,48 @@ class App extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
+            name: '',
             email: '',
             password: '',
-            gender: 'm'
-        };
-    }
+            error: ''
+        }
 
-    changeInput(input, e) {
-        this.setState({
-            ...this.state,
-            [input] : e.target.value
-        });
+        this.submitForm = this.submitForm.bind(this);
+    }
+    
+    submitForm(e) {
+        e.preventDefault();
+
+        const {name, email, password} = this.state;
+
+        if (name === '' || email === '' || password === '') {
+            this.setState({
+                error: 'Some field is empty.'
+            });
+            return;
+        } 
+
+        alert(`name: ${name} \n email: ${email} \n password: ${password}`);
+        this.setState({error: ''});       
     }
 
     render() {
-        return (
-            <div>   
-                <h2>Login</h2>
-                gender:
-                <select name="gender" value={this.state.gender} 
-                    onChange={(e) => this.changeInput('gender', e)}>
-                    <option value="m">Male</option>
-                    <option value="f">Female</option>
-                </select>
-                Email: 
-                <input type="text" name="email" value={this.state.email} 
-                    onChange={(e) => this.changeInput('email', e)}/>
-                Password: 
-                <input type="text" name="password" value={this.state.password}
-                    onChange={(e) => this.changeInput('password', e)}/>
+        return(
+            <div>
+                {this.state.error && <p>{this.state.error}</p>}
+                <form onSubmit={this.submitForm}>
+                    Name: <input type="text" name="name" value={this.state.name}  
+                        onChange={e => this.setState({ name: e.target.value })}/><br/>
 
-                <div>
-                    <div>{this.state.email}</div>
-                    <div>{this.state.password}</div>
-                    <div>{this.state.gender}</div>
-                </div>
+                    Email: <input type="text" name="email" value={this.state.email} 
+                        onChange={e => this.setState({ email: e.target.value })}/><br/>
+
+                    Password: <input type="password" name="password" value={this.state.password} 
+                        onChange={e => this.setState({ password: e.target.value })}/><br/>
+                    <button type="submit">Enviar</button>
+                </form>
             </div>
         );
     }
