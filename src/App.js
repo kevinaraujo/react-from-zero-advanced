@@ -5,16 +5,23 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
-            password: '',
-            gender: 'm'
+            form: {
+                email: '',
+                password: '',
+                gender: 'm'
+            }
         };
+
+        this.changeInput = this.changeInput.bind(this);
     }
 
-    changeInput(input, e) {
+    changeInput(e) {
+        const form = this.state.form;
+
+        form[e.target.name] = e.target.value;
+
         this.setState({
-            ...this.state,
-            [input] : e.target.value
+            form: form
         });
     }
 
@@ -23,22 +30,22 @@ class App extends Component {
             <div>   
                 <h2>Login</h2>
                 gender:
-                <select name="gender" value={this.state.gender} 
-                    onChange={(e) => this.changeInput('gender', e)}>
+                <select name="gender" value={this.state.form.gender} 
+                    onChange={this.changeInput}>
                     <option value="m">Male</option>
                     <option value="f">Female</option>
                 </select>
                 Email: 
-                <input type="text" name="email" value={this.state.email} 
-                    onChange={(e) => this.changeInput('email', e)}/>
+                <input type="text" name="email" value={this.state.form.email} 
+                    onChange={this.changeInput}/>
                 Password: 
-                <input type="text" name="password" value={this.state.password}
-                    onChange={(e) => this.changeInput('password', e)}/>
+                <input type="text" name="password" value={this.state.form.password}
+                    onChange={this.changeInput}/>
 
                 <div>
-                    <div>{this.state.email}</div>
-                    <div>{this.state.password}</div>
-                    <div>{this.state.gender}</div>
+                    <div>{this.state.form.email}</div>
+                    <div>{this.state.form.password}</div>
+                    <div>{this.state.form.gender}</div>
                 </div>
             </div>
         );
