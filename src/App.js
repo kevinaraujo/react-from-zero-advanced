@@ -1,52 +1,52 @@
 import React, { Component } from 'react';
+import img from './assets/biscoito.png';
+import './style.css';
 
 class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            form: {
-                email: '',
-                password: '',
-                gender: 'm'
-            }
-        };
+            sentence: ''
+        }
 
-        this.changeInput = this.changeInput.bind(this);
+        this.frases = [
+            'sentence 1',
+            'sentence 2',
+            'sentence 3',
+            'sentence 4',
+            'sentence 5',
+            'sentence 6',
+            'sentence 7',
+            'sentence 8'
+        ];
+
+        this.breakCookie = this.breakCookie.bind(this);
     }
 
-    changeInput(e) {
-        const form = this.state.form;
-
-        form[e.target.name] = e.target.value;
-
-        this.setState({
-            form: form
-        });
+    breakCookie() {
+        let RandomNumber = Math.floor(Math.random() * this.frases.length);
+        let sentence = `"${this.frases[RandomNumber]}"`;
+        
+        this.setState({ sentence });
     }
 
     render() {
         return (
-            <div>   
-                <h2>Login</h2>
-                gender:
-                <select name="gender" value={this.state.form.gender} 
-                    onChange={this.changeInput}>
-                    <option value="m">Male</option>
-                    <option value="f">Female</option>
-                </select>
-                Email: 
-                <input type="text" name="email" value={this.state.form.email} 
-                    onChange={this.changeInput}/>
-                Password: 
-                <input type="text" name="password" value={this.state.form.password}
-                    onChange={this.changeInput}/>
+            <div className="container">   
+                <img src={img} className="img"/>
+                <Button name="Open cookie" btnAction={this.breakCookie}/>
+                <h3 className="sentence">{this.state.sentence}</h3>
+            </div>
+        );
+    }
+}
 
-                <div>
-                    <div>{this.state.form.email}</div>
-                    <div>{this.state.form.password}</div>
-                    <div>{this.state.form.gender}</div>
-                </div>
+class Button extends Component {
+    render() {
+        return (
+            <div>
+                <button onClick={this.props.btnAction}>{this.props.name}</button> 
             </div>
         );
     }
