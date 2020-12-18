@@ -1,36 +1,53 @@
 import React, { Component } from 'react';
+import './style.css';
 
-class Team extends Component {
-    render() {
-        return (
-            <div>
-                <About name={this.props.name} age={this.props.age}/>
-            </div>
-        );  
+class App extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            nutri: []
+        };
     }
-}
 
-class About extends Component {
+    componentDidMount() {
+        let url = process.env.REACT_APP_API_URL;
+        
+        fetch(url) 
+        .then((r) => r.json())
+        .then((data) => {
+            let state = this.state;
+            state.nutri = data;
+
+            this.setState(state);
+        });
+    }
+
     render() {
+      
         return (
-            <div>
-                <h2>Hi, I'm { this.props.name } </h2>
-                <h3>Age: {this.props.age}</h3>
-                <h3>Role: {this.props.role}</h3>
-                <hr/>
+            <div className="container">
+                <header>
+                    <strong>React Nutri</strong>
+                </header>
+
+                    { this.state.nutri.length ?
+                        this.state.nutri.map((item) => {
+                            return (
+                               <article key={item.id} className="post">
+                                   <strong className="title">{item.titulo}</strong>
+                                   <img src={item.capa}/>
+                                   <p>{item.subtitulo}</p>
+                                   <a className="btn" href="#">Access</a>
+                               </article>
+                            )
+                        })
+                        
+                        : <strong className="wait">Wait a second...</strong>
+                    }
             </div>
         );
     }
-}
-
-function App() {
-    return (
-        <div>
-            <h1>Conheça nossa equipe:</h1>
-            <Team name="Lucas" role="developer" age="26"/>
-            <Team name="João" role="analyst" age="20"/>
-        </div>
-    );
 }
 
 export default App;
