@@ -10,6 +10,7 @@ class Routes extends Component {
                 <Header/>
                 <Switch>
                     <Route exact path="/" component={Pages.Home}/>
+                    <Route exact path="/film/:id" component={Pages.Film}/>
                     <Route path="*" component={Pages.NotFound}/>
                 </Switch>
             </BrowserRouter>
