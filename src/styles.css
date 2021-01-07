@@ -1,0 +1,53 @@
+header {
+    display: flex;
+    flex-direction: row;
+    height: 90px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff0000;
+}
+
+.menu {
+    display: flex;
+}
+
+ul {
+    display: flex;
+}
+
+nav ul, 
+nav li {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+nav a {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 20px;
+    padding: 15px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.home {
+    width: 100%;
+    height: 600px;
+    background-color: #0000ff;
+}
+
+.home h1 {
+    margin: 0px;
+}
+
+.about {
+    width: 100%;
+    height: 600px;
+    background-color: #ddd;
+}
+
+.about h1 {
+    margin: 0px;
+}
