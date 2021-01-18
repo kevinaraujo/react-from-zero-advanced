@@ -1,36 +1,71 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
 
-class Team extends Component {
+class App extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            token: 'Loading...',
+            name: '',
+            age: ''
+        };
+
+        let firebaseConfig = {
+            apiKey: "AIzaSyDzWmNTf3MsLpMJ5DAoYANxdxkzTzI3kH4",
+            authDomain: "react-app-e409d.firebaseapp.com",
+            projectId: "react-app-e409d",
+            storageBucket: "react-app-e409d.appspot.com",
+            messagingSenderId: "908039182483",
+            appId: "1:908039182483:web:8e7850295828444bc69566",
+            measurementId: "G-6RLTSLBGZ1"
+          };
+
+       
+          if(!firebase.apps.length){
+                firebase.initializeApp(firebaseConfig);
+            }
+
+         // if already initialized, use that one
+
+       /* firebase.database().ref('token').on('value', (snapshot) => {
+            let state = this.state;
+
+            state.token = snapshot.val();
+
+            this.setState(state);
+        });*/
+
+        firebase.database().ref('token').once('value', (snapshot) => {
+            let state = this.state;
+
+            state.token = snapshot.val();
+
+            this.setState(state);
+        });
+        
+        firebase.database().ref('users').child(1).on('value', (snapshot) => {
+            let state = this.state;
+
+            state.name = snapshot.val().name;
+            state.age = snapshot.val().age;
+
+            this.setState(state);
+        });
+        
+    }
+
     render() {
+        const {token, name, age} = this.state;
+
         return (
             <div>
-                <About name={this.props.name} age={this.props.age}/>
+               <h1>Token: {token}</h1>
+               <h1>Name: {name}</h1>
+               <h1>Age: {age}</h1>
             </div>
         );  
     }
 }
-
-class About extends Component {
-    render() {
-        return (
-            <div>
-                <h2>Hi, I'm { this.props.name } </h2>
-                <h3>Age: {this.props.age}</h3>
-                <h3>Role: {this.props.role}</h3>
-                <hr/>
-            </div>
-        );
-    }
-}
-
-function App() {
-    return (
-        <div>
-            <h1>Conheça nossa equipe:</h1>
-            <Team name="Lucas" role="developer" age="26"/>
-            <Team name="João" role="analyst" age="20"/>
-        </div>
-    );
-}
-
 export default App;
