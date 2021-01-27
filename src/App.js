@@ -14,7 +14,8 @@ class App extends Component {
             password: ''
         };    
 
-        this.save = this.save.bind(this);
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
 
         let firebaseConfig = {
             apiKey: "AIzaSyDzWmNTf3MsLpMJ5DAoYANxdxkzTzI3kH4",
@@ -29,10 +30,16 @@ class App extends Component {
         if(!firebase.apps.length){
             firebase.initializeApp(firebaseConfig);
         }
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                alert('User logged successfully!');
+            }
+        });
     }
 
-    save(e) {
-        firebase.auth().createUserWithEmailAndPassword(
+    login(e) {
+        firebase.auth().signInWithEmailAndPassword(
             this.state.email, 
             this.state.password
         )
@@ -45,13 +52,9 @@ class App extends Component {
             alert('success');
         })
         .catch((error) => {
-            if (error.code === 'auth/invalid-email') {
-                alert('Invalid email.');
-                return;
-            }
 
-            if (error.code === 'auth/weak-password') {
-                alert('Weak password.');
+            if (error.code === 'auth/wrong-password') {
+                alert('Password in incorrect.');
                 return;
             }
 
@@ -62,12 +65,18 @@ class App extends Component {
         e.preventDefault();
     }
 
+    logout() {
+        firebase.auth().signOut();
+        alert('User logged out!');
+    }
+
 
     render() {
 
         return (
             <div>
-                <form onSubmit={this.save}>
+                Login
+                <form onSubmit={this.login}>
                     Email: <input type="text" value={this.state.email} 
                     onChange={(e) => this.setState({email: e.target.value })}/>
                    <br/>
@@ -75,8 +84,11 @@ class App extends Component {
                     onChange={(e) => this.setState({password: e.target.value })}/>
                     <br/>
 
-                    <button type="submit">Save</button>
-                </form> 
+                    <button type="submit">Log in</button>
+                </form>
+                
+                <button onClick={this.logout}>Log out</button>
+               
             </div>
         );  
     }
