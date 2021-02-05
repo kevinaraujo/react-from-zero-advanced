@@ -10,12 +10,15 @@ class App extends Component {
         super(props);
 
         this.state = {
-            name: '',
+            user: null,
             email: '',
             password: ''
         };    
 
+        this.auth = this.auth.bind(this);
         this.save = this.save.bind(this);
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
 
         let firebaseConfig = {
             apiKey: "AIzaSyDzWmNTf3MsLpMJ5DAoYANxdxkzTzI3kH4",
@@ -30,28 +33,21 @@ class App extends Component {
         if(!firebase.apps.length){
             firebase.initializeApp(firebaseConfig);
         }
+    }
 
+    componentDidMount() {
+        this.auth();
+    }
+
+    auth() {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                let {uid} = user;
-            
-                firebase.database().ref('users').child(uid).set({
-                    name: this.state.name,
-                    email: this.state.email,
-                    password: this.state.password
-                })
-                .then(() => {
-                    this.setState({
-                        name: '',
-                        email: '',
-                        password: ''
-                    });
-                });
+                this.setState({user: user});
             }
         });
     }
 
-    save(e) {
+    save() {
         firebase.auth().createUserWithEmailAndPassword(
             this.state.email, 
             this.state.password
@@ -73,29 +69,55 @@ class App extends Component {
             alert(`Error code: ${error.code}`);
             return;
         });
-
-        e.preventDefault();
     }
 
+    login() {
+        firebase.auth().signInWithEmailAndPassword(
+            this.state.email,
+            this.state.password
+        )
+        .catch((error) => {
+            alert(`Error code: ${error.code}`);
+        });
+    }
+
+    logout() {
+        firebase.auth().signOut()
+        .then(() => {
+            this.setState({user: null});
+            alert('Logged out successfully!')
+        })
+    }
 
     render() {
 
         return (
             <div>
-                <h1>New User</h1>
-                <form onSubmit={(e) => this.save(e)}>
-                    Name: <input type="text" value={this.state.name} 
-                    onChange={(e) => this.setState({name: e.target.value })}/>
-                   <br/>
-                    Email: <input type="text" value={this.state.email} 
-                    onChange={(e) => this.setState({email: e.target.value })}/>
-                   <br/>
-                    Password: <input type="text" value={this.state.password} 
-                    onChange={(e) => this.setState({password: e.target.value })}/>
-                    <br/>
+                { this.state.user ?
+                    <div>
+                        <h1>Admin Panel</h1>
+                        <p>Welcome</p>
+                        <p>
+                            {this.state.user.email}<br/>
+                            {this.state.user.uid}
+                        </p>
+                        <button onClick={this.logout}>Log out </button>
+                    </div>
+                :
+                    <div>
+                        <h1>Welcome</h1>
 
-                    <button type="submit">Save</button>
-                </form> 
+                        Email:<br/><input type="text" value={this.state.email} 
+                        onChange={(e) => this.setState({email: e.target.value })}/>
+                        <br/>
+                        Password:<br/><input type="text" value={this.state.password} 
+                        onChange={(e) => this.setState({password: e.target.value })}/>
+                        <br/>
+
+                        <button onClick={this.save}>Save</button>
+                        <button onClick={this.login}>Log in </button>
+                    </div>
+                }
             </div>
         );  
     }
