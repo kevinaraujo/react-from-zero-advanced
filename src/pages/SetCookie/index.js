@@ -1,19 +1,39 @@
+import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 
-const SetCookie = () => {
-       
-    const user = { name: 'Kevin' };
+class SetCookie extends Component {
+    constructor(props) {
+        super(props);
 
-    const cookies = new Cookies();
-    cookies.set('user', user, {
-        expires: new Date(Date.now()+60000)
-    });
+        this.state = {
+            user: null
+        };
+    }
 
-    return (
-        <div>
-            Cookies set!
-        </div>
-    );
+    componentDidMount() {
+        this.setState({user: 'nice'});
+    }
+
+    componentDidUpdate() {
+
+        const user = { name: 'Kevin' };
+
+        const cookies = new Cookies();
+        cookies.set('user', user, {
+            expires: new Date(Date.now()+60000)
+        });
+
+        console.log('setado', cookies.get('user'));
+    }
+
+    render() {
+        return (
+            <div>
+                Cookies set!
+            </div>
+        );
+    }    
+    
 }
 
 export default SetCookie;
