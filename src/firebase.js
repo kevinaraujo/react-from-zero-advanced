@@ -24,7 +24,11 @@ class Firebase {
         return app.auth().signInWithEmailAndPassword(email, password);
     }
 
-    async register(email, password, name) {
+    logout() {
+        return app.auth().signOut();
+    }
+
+    async register(name, email, password) {
         await app.auth().createUserWithEmailAndPassword(email, password);
 
         const uid = app.auth().currentUser.uid;
@@ -38,6 +42,10 @@ class Firebase {
         return new Promise(resolve => {
             app.auth().onAuthStateChanged(resolve);
         });
+    }
+    
+    getCurrent() {
+        return app.auth().currentUser && app.auth().currentUser.email;
     }
 }
 
