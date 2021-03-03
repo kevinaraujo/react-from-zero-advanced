@@ -34,7 +34,7 @@ class Login extends Component {
         const {email, password} = this.state;
 
         try {
-            firebase.login(email, password)
+            await firebase.login(email, password)
             .catch((error) => {
                 if(error.code === 'auth/user-not-found') {
                     alert('User not found.');
