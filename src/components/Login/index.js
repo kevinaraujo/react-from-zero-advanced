@@ -24,12 +24,13 @@ class Login extends Component {
     }
 
     enter(e) {
-        e.preventDefault(); 
 
         this.login();
+        e.preventDefault(); 
     }
 
     login = async () => {
+        const history = this.props.history;
         const {email, password} = this.state;
 
         try {
@@ -43,7 +44,7 @@ class Login extends Component {
                 }
             }); 
 
-            this.props.history.replace('/dashboard');
+            return history.replace('/dashboard');
         } catch (error) {
             alert(error.message);
         }
