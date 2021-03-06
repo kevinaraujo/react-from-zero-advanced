@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import firebase from './../../firebase';
 import './dashboard.css';
+import {Example} from './Example';
 
 class Dashboard extends Component {
 
@@ -12,6 +13,7 @@ class Dashboard extends Component {
         };
         this.logout = this.logout.bind(this);
     }
+    
     async componentDidMount() {
         if(!firebase.getCurrent()) {
             this.props.history.replace('/login');
@@ -36,13 +38,14 @@ class Dashboard extends Component {
 
     render() {
         const email = firebase.getCurrent();
-        
+
         return(
             <div id="dashboard">
                 <div className="user-info">
                     <h1>Hi {this.state.name}</h1>
                     <Link to="/dashboard/new">New Post</Link>
                 </div>
+                <Example title={'BYEE'}/>
                 <p>Logged as: {email}</p>
                 <button onClick={() => this.logout()}>Log out</button>
             </div>

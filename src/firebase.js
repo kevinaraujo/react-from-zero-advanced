@@ -17,6 +17,7 @@ class Firebase {
     constructor() {
         app.initializeApp(firebaseConfig);
 
+        //MAKING database AVAILABLE FOR OUTSIDE
         this.app = app.database();
     }
 

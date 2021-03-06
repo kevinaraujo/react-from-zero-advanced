@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Header, Home, Login, Dashboard, Register} from './components';
+import { Header, Home, Login, Dashboard, Register, New} from './components';
 import firebase from './firebase';
 import './App.css';
 import './global.css';
@@ -30,6 +30,7 @@ class App extends Component {
           <Route exact path="/login" component={Login}/>
           <Route exact path="/dashboard" component={Dashboard}/>
           <Route exact path="/register" component={Register}/>
+          <Route exact path="/dashboard/new" component={New}/>
         </Switch>
       </BrowserRouter>
     ) : (
