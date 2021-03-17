@@ -1,6 +1,6 @@
-# Blog project in reactjs
+# Repository project in reactjs
 
-This project was created in react reactjs and firebase to save data.
+This project was created in react reactjs, using localstorage and axios to request in github api.
 
 In the project directory, you can run:
 
