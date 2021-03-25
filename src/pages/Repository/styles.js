@@ -131,3 +131,28 @@ export const PageActions = styled.div`
         }
     }
 `;
+
+export const StatusActions = styled.div`
+    margin-top: 10px;
+`;
+
+export const Button = styled.button`
+    background-color: #0D2636;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px; 10px;
+    margin: 0 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: filter 0.2s;
+
+    &:hover {
+        filter: brightness(0.9);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+`;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Owner, Loading, BackButton, IssuesList, PageActions } from './styles';
+import { Container, Owner, Loading, BackButton, IssuesList, PageActions, 
+StatusActions, Button } from './styles';
 import { FaArrowLeft } from 'react-icons/fa';
 import api from './../../services/api';
 
@@ -9,6 +10,8 @@ export default ({match}) => {
     const [issues, setIssues] = useState([]);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
+    const [currentStatus, setSurrentStatus] = useState('Open');
+    const statusButtons = ['Open', 'Closed', 'All'];
 
     useEffect(() => {
         async function load() {
@@ -18,7 +21,7 @@ export default ({match}) => {
                 api.get(`/repos/${repoName}`),
                 api.get(`/repos/${repoName}/issues`, {
                     params: {
-                        state: 'open',
+                        state: currentStatus.toLowerCase(),
                         per_page: 5
                     }
                 })
@@ -34,13 +37,13 @@ export default ({match}) => {
     }, [match.params.repository]);
 
     useEffect(() => {
-
+        
         async function loadIssue() {
             const repoName = decodeURIComponent(match.params.repository);
             
             const response = await api.get(`repos/${repoName}/issues`, {
                 params: {
-                    state: 'open',
+                    state: currentStatus.toLowerCase(),
                     page: page,
                     per_page: 5
                 }
@@ -51,12 +54,16 @@ export default ({match}) => {
 
         loadIssue();
 
-    }, [match.params.repository, page]);
+    }, [match.params.repository, page, currentStatus]);
 
     function handlePage(action) {
         let newPage = action === 'next' ? page + 1 : page - 1;
 
         setPage(newPage);
+    }
+
+    function changeStatus(newStatus) {
+        setSurrentStatus(newStatus);
     }
 
     if (loading) {
@@ -79,6 +86,16 @@ export default ({match}) => {
                <h1>{repository.name}</h1>
                <p>{repository.description}</p>               
            </Owner>
+
+           <StatusActions>
+               { statusButtons.map(status => (
+                    <Button 
+                    disabled={currentStatus === status}
+                    onClick={() => changeStatus(status) }>
+                        { status }
+                    </Button>
+               ))}
+           </StatusActions>
 
            <IssuesList>
                { issues.map(issue => (
