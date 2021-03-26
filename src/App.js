@@ -1,17 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Routes from './routes';
-import GlobalStyle from './styles/global';
 
-class App extends Component {
-
-  render() {
+export const App = () => {
     return (
-      <>
-        <GlobalStyle/>
-        <Routes/>
-      </>
+        <Routes />
     );
-  }
 }
-
-export default App;

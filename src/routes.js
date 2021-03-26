@@ -1,15 +1,19 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import Main from './pages/Main';
-import Repository from './pages/Repository';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import Header from './components/Header';
+import Home from './pages/Home';
+import Reservation from './pages/Reservation';
 
-export default () => {
+const Routes = () => {
     return (
-       <BrowserRouter>
+        <BrowserRouter>
+            <Header/>
             <Switch>
-                <Route exact path="/" component={Main}/>
-                <Route exact path="/repository/:repository" component={Repository}/>
+                <Route exact path="/"  component={Home} />
+                <Route exact path="/reservations" component={Reservation}/> 
             </Switch>
-       </BrowserRouter>
+        </BrowserRouter>
     );
 }
+
+export default Routes;

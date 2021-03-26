@@ -8,3 +8,8 @@ In the project directory, you can run:
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+
+### `yarn json-server server.json -p 3333`
+
+Runs the fake api to react consume.
