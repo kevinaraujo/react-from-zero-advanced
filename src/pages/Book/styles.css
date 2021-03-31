@@ -2,7 +2,7 @@
     color: #fff;
 }
 
-.div-reservation {
+.div-book {
     padding: 20px;
     margin-bottom: 10px;
     background: #fff;
@@ -12,11 +12,11 @@
     align-items: center;
 }
 
-.div-reservation img {
+.div-book img {
     height: 100px;
 }
 
-.div-reservation button {
+.div-book button {
     border: 0;
     background: #fff;
 }
