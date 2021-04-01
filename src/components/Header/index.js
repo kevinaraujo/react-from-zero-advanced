@@ -7,7 +7,7 @@ import './style.css';
 export default function Header() {
     const books = useSelector(state => state.book);
     let totalBooks = `${books.length} book`;
-
+   
     if (books.length > 1) {
         totalBooks = totalBooks.replace('book', 'books');
     }
@@ -18,7 +18,7 @@ export default function Header() {
                 <img src={logo} className="logo" alt="Project logo"/>
             </Link>
 
-            <Link className="reservation" to="/reservations">
+            <Link className="book" to="/book">
                 <div>
                     <strong>My Books</strong>
                     <span>{ totalBooks }</span>

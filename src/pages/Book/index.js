@@ -1,26 +1,35 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { MdDelete } from 'react-icons/md'; 
 import './styles.css';
 
 const Book = () => {
+    const books = useSelector(state => state.book);
+    
+    let title = `You requested ${books.length} book`;
+
+    if (books.length > 1) {
+        title = title.replace('book', 'books');
+    }
+
     return (
         <div>
-            <h1 className="title">You requested 1 book</h1>
-            <div className="div-book">
-                <img 
-                src="https://sujeitoprogramador.com/wp-content/uploads/2019/12/caribe.jpg"
-                alt="Maceio"
-                />
-                <strong>Trip Maceió 7 days</strong>
-                <span>Quantity: 2</span>
-                <button
+            <h1 className="title">{ title }</h1>
+
+            { books.map(book => (
+                <div className="div-book" key={ book.id }>
+                    <img src={ book.image } alt={ book.title }/>
+                    <strong>{ book.title }</strong>
+                    <span>Quantity: { book.amount }</span>
+                    <button
                     type="button"
                     onClick={() => {}}
-                >
-                    <MdDelete size={20} color="#191919"/>
-                </button>
-            </div>
-
+                    >
+                        <MdDelete size={20} color="#191919"/>
+                    </button>
+                </div>
+            ))}
+        
             <footer>
                 <button type="button">Request book</button>
             </footer>

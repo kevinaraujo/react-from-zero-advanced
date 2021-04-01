@@ -25,7 +25,7 @@ const Home = () => {
     loadApi();
   }, []);
 
-  const handleAdd = (trip) => {
+  const handleAdd = (trip) => {   
     dispatch({
       type: 'ADD_BOOK',
       trip
