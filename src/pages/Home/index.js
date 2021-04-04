@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { addBook } from './../../store/modules/Book/actions';
+
 import api from './../../services/api';
 import { MdFlightTakeoff } from 'react-icons/md';
 import './styles.css';
@@ -26,10 +28,7 @@ const Home = () => {
   }, []);
 
   const handleAdd = (trip) => {   
-    dispatch({
-      type: 'ADD_BOOK',
-      trip
-    })
+    dispatch(addBook(trip));
   }
   
   return (   
