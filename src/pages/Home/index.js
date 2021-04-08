@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addBook } from './../../store/modules/Book/actions';
+import { addBookRequest } from './../../store/modules/Book/actions';
 
 import api from './../../services/api';
 import { MdFlightTakeoff } from 'react-icons/md';
@@ -27,8 +27,8 @@ const Home = () => {
     loadApi();
   }, []);
 
-  const handleAdd = (trip) => {   
-    dispatch(addBook(trip));
+  const handleAdd = (id) => {   
+    dispatch(addBookRequest(id));
   }
   
   return (   
@@ -41,7 +41,7 @@ const Home = () => {
             <strong>{ trip.title }</strong>
             <span>Status: { trip.status ? 'Disponível' : 'Indisponível' }</span>
 
-            <button type="button" onClick={() => handleAdd(trip)}>
+            <button type="button" onClick={() => handleAdd(trip.id)}>
               <div> 
                 <MdFlightTakeoff sizeof={16} color="#fff"/>
               </div>

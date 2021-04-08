@@ -1,6 +1,13 @@
-export function addBook(trip) {
+export function addBookRequest(id) {
     return {
-        type: 'ADD_BOOK',
+        type: 'ADD_BOOK_REQUEST',
+        id
+    }
+}
+
+export function addBookSuccess(trip) {
+    return {
+        type: 'ADD_BOOK_SUCCESS',
         trip
     }
 }
