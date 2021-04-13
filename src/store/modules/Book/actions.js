@@ -19,10 +19,18 @@ export function removeBook(id) {
     }
 }
 
-export function updateBookAmount(id, amount) {
+export function updateBookRequest(id, amount) {
     return {
-        type: 'UPDATE_BOOK_AMOUNT',
-        id, 
+        type: 'UPDATE_BOOK_REQUEST',
+        id,
+        amount
+    }
+}
+
+export function updateBookSuccess(id, amount) {
+    return {
+        type: 'UPDATE_BOOK_SUCCESS',
+        id,
         amount
     }
 }
