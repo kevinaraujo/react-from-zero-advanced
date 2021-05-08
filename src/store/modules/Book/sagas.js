@@ -1,6 +1,7 @@
 import { select, call, put, all, takeLatest } from 'redux-saga/effects';
 import { addBookSuccess, updateBookSuccess } from './actions';
 import api from '../../../services/api';    
+import history from '../../../services/history';    
 
 function* addToBook({ id }) {
 
@@ -32,6 +33,8 @@ function* addToBook({ id }) {
         };
 
         yield put(addBookSuccess(data));
+
+        history.push('/book');
     }    
 }
 
