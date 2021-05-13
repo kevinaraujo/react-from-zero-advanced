@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/auth';
+
 import './index.css';
 import logo from '../../assets/logo.png';
 
@@ -8,10 +10,14 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { register } = useContext(AuthContext);
+
   function handleSubmit(e) {
     e.preventDefault();
 
-    alert('clicked');
+    if (name !== '' && email !== '' && password !== '') {
+      register({ name, email, password });
+    } 
   }
 
   return(
