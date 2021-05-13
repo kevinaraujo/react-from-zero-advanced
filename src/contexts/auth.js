@@ -1,5 +1,6 @@
 import { useState, createContext, useEffect } from 'react';
 import firebase from '../services/firebaseConnection';
+import { toast } from 'react-toastify';
 
 export const AuthContext = createContext({});
 
@@ -49,10 +50,12 @@ function AuthProvider({ children }) {
         setUser(userData);
         storageUser(userData);
         setLoadingAuth(false);
+        toast.success('Welcome to platform');
       });
 
     })
     .catch((error) => {
+      toast.error('Ops! Something went wrong...');
       console.log(error);
       setLoadingAuth(false);
     })
@@ -61,6 +64,36 @@ function AuthProvider({ children }) {
 
   function storageUser(userData) {
     localStorage.setItem('userData', JSON.stringify(userData));
+  }
+
+  async function login({email, password}) {
+    setLoadingAuth(true);
+
+    await firebase.auth().signInWithEmailAndPassword(email, password)
+    .then( async (value) => {
+
+      let uid =  value.user.uid;
+
+      const userFirebase = await firebase.firestore().collection('users')
+      .doc(uid).get();
+
+      let userData = {
+        uid,
+        name: userFirebase.data().name,
+        avatarUrl: userFirebase.data().avatarUrl,
+        email: value.user.email
+      };
+
+      setUser(userData);
+      storageUser(userData);
+      setLoadingAuth(false);
+      toast.success('Welcome again!');
+    })
+    .catch((error) => {
+      toast.error('Ops! Something went wrong...');
+      console.log(error);
+      setLoadingAuth(false);
+    })
   }
 
   async function logout() {
@@ -76,7 +109,9 @@ function AuthProvider({ children }) {
       user, 
       loading, 
       register,
-      logout
+      login,
+      logout,
+      loadingAuth
     }}>
       { children }
     </AuthContext.Provider>

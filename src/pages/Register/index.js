@@ -10,7 +10,7 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { register } = useContext(AuthContext);
+  const { register, loadingAuth } = useContext(AuthContext);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -41,7 +41,9 @@ function Register() {
           <input type="password" placeholder="********" 
             value={ password }
             onChange={ (e) => setPassword(e.target.value) } />
-          <button type="submit">Create</button>
+          <button type="submit">
+            { loadingAuth ? 'Loading...' : 'Create' }
+          </button>
 
           <Link to="/login">Have you an account? Login here</Link>
         </form>

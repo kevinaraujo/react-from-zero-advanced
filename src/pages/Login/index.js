@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/auth';
+
 import './index.css';
 import logo from '../../assets/logo.png';
 
@@ -7,10 +9,14 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { login, loadingAuth } = useContext(AuthContext);
+
   function handleSubmit(e) {
     e.preventDefault();
 
-    alert('clicked');
+    if ( email !== '' && password !== '') {
+      login({email, password});
+    }
   }
 
   return(
@@ -30,7 +36,10 @@ function Login() {
           <input type="password" placeholder="********" 
             value={ password }
             onChange={ (e) => setPassword(e.target.value) } />
-          <button type="submit">Access</button>
+
+          <button type="submit">
+            { loadingAuth ? 'Loading...' : 'Access' }
+          </button>
 
           <Link to="/register">Create new account</Link>
         </form>
